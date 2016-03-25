@@ -5,6 +5,11 @@ date: "March 23, 2016"
 output: html_document
 ---
 
+# The Original Graphic
+
+![alt text](https://raw.githubusercontent.com/lecy/WWTD/master/Resources/Screen%20Shot%202016-03-11%20at%2012.04.12%20PM.png "Bad Graph")
+
+
 ```{r}
 
 library( wesanderson )
