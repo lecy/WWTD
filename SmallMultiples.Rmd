@@ -1,9 +1,11 @@
----
-title: "Tufte Lab"
-author: "Jacqui Buchanan"
-date: "March 23, 2016"
-output: html_document
----
+
+
+```{r}
+# title: "Tufte Lab"
+# author: "Jacqui Buchanan"
+# date: "March 23, 2016"
+# output: html_document
+```
 
 # The Original Graphic
 
@@ -56,8 +58,11 @@ barplot( height=cbind(Commerce, Consumer.Goods, Energy, Financial, Healthcare, M
         )
 legend("topleft", c("2014","2015"), cex=.75, bty="n", fill=wes_palette("Cavalcanti", 2) )
 
+```
 
-# Attempt at visualization by sector
+# Visualization by Sector
+
+```{r}
 
 #Commerce
 par( mfrow=c(2,4), mar=c(3,1,0,1), oma=c(0,0,3,0) )
