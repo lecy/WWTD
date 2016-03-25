@@ -6,9 +6,9 @@ output: html_document
 ---
 
 ```{r}
-setwd("C:/Users/Rory/Google Drive/Class/Data-Driven Management II/tofte assignment")
 
-dat <- read.csv("dc tax burdens.csv")
+dat <- read.csv("https://raw.githubusercontent.com/lecy/WWTD/master/Data/dc%20tax%20burdens.csv")
+
 new <- paste(dat$County, ", ", dat$State, sep="") #combine county/state for easy naming vector
 
 
