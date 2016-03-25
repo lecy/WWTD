@@ -1,0 +1,170 @@
+---
+title: "Tufte Lab"
+author: "Jacqui Buchanan"
+date: "March 23, 2016"
+output: html_document
+---
+
+```{r}
+
+library( wesanderson )
+
+# Create my data for bar graph 
+sector.bar <- c( "Commerce", "Consumer Goods", "Energy", "Financial", "Healthcare", "Materials", "Services", "Technology" )
+dat.2014.bar <- c( 10, 30, 45, 80, 20, 9, 110, 77 )
+dat.2015.bar <- c( 27, 71, 69, 281, 53, 25, 200, 140 )
+
+dat.bar <- data.frame( sector.bar, dat.2014.bar, dat.2015.bar )
+dat.bar
+
+# Create my data for line graph
+sector.line <- c( "Commerce", "Consumer Goods", "Energy", "Financial", "Healthcare", "Materials", "Services", "Technology" )
+dat.2014.line <- c( 250, 450, 80, 275, 200, 50, 1850, 1500 )
+dat.2015.line <- c( 265, 550, 150, 650, 260, 50, 2300, 1800 )
+
+dat.line <- data.frame( sector.line, dat.2014.line, dat.2015.line )
+dat.line 
+
+# Basic grouped barplot, with confusing lines removed
+
+Commerce <- c(10,27)
+Consumer.Goods <- c(30,71)
+Energy <- c(45,69)
+Financial <- c(80,281)
+Healthcare <- c(20,53)
+Materials <- c(9,25)
+Services <- c(110,200)
+Technology <- c(77,140)
+
+par( mar=c(5.1,4.1,4.1,2.1), mfrow=c(1,1))
+
+barplot( height=cbind(Commerce, Consumer.Goods, Energy, Financial, Healthcare, Materials, Services, Technology),
+         beside=TRUE,
+         names.arg=dat.bar$sector.bar,
+         cex.names=.70,
+         main="Overall Giving Activity Through Years 1 & 2 by Sector",
+         ylab="Giving in Millions ($)",
+         col=wes_palette("Cavalcanti", 2)
+        )
+legend("topleft", c("2014","2015"), cex=.75, bty="n", fill=wes_palette("Cavalcanti", 2) )
+
+
+# Attempt at visualization by sector
+
+#Commerce
+par( mfrow=c(2,4), mar=c(3,1,0,1), oma=c(0,0,3,0) )
+
+barplot( Commerce, space=0, axes=F, col=wes_palette("Cavalcanti", 2), names.arg="Commerce", cex.names=1.5, ylim=c(0,300) )
+legend("topleft", c("2014","2015"), cex=1.5, bty="n", fill=wes_palette("Cavalcanti", 2) )
+barplot( Consumer.Goods, space=0, axes=F, col=c("gray90","gray60"), names.arg="Consumer Goods", cex.names=1.5, ylim=c(0,300)  )
+barplot( Energy, space=0, axes=F, col=c("gray90","gray60"), names.arg="Energy", cex.names=1.5, ylim=c(0,300) )
+barplot( Financial, space=0, axes=F, col=c("gray90","gray60"), names.arg="Financial", cex.names=1.5, ylim=c(0,300) )
+barplot( Healthcare, space=0, axes=F, col=c("gray90","gray60"), names.arg="Healthcare", cex.names=1.5, ylim=c(0,300) )
+barplot( Materials, space=0, axes=F, col=c("gray90","gray60"), names.arg="Materials", cex.names=1.5, ylim=c(0,300) )
+barplot( Services, space=0, axes=F, col=c("gray90","gray60"), names.arg="Services", cex.names=1.5, ylim=c(0,300) )
+barplot( Technology, space=0, axes=F, col=c("gray90","gray60"), names.arg="Technology", cex.names=1.5, ylim=c(0,300) )
+mtext( "Overall Giving Activity Through Years 1 & 2 by Sector", outer = TRUE, side=3, cex=1)
+
+# Consumer Goods
+par( mfrow=c(2,4), mar=c(3,1,0,1), oma=c(0,0,3,0) )
+
+barplot( Commerce, space=0, axes=F, col=c("gray90","gray60"), names.arg="Commerce", cex.names=1.5, ylim=c(0,300) )
+legend("topleft", c("2014","2015"), cex=1.5, bty="n", fill=wes_palette("Cavalcanti", 2) )
+barplot( Consumer.Goods, space=0, axes=F, col=wes_palette("Cavalcanti", 2), names.arg="Consumer Goods", cex.names=1.5, ylim=c(0,300)  )
+barplot( Energy, space=0, axes=F, col=c("gray90","gray60"), names.arg="Energy", cex.names=1.5, ylim=c(0,300) )
+barplot( Financial, space=0, axes=F, col=c("gray90","gray60"), names.arg="Financial", cex.names=1.5, ylim=c(0,300) )
+barplot( Healthcare, space=0, axes=F, col=c("gray90","gray60"), names.arg="Healthcare", cex.names=1.5, ylim=c(0,300) )
+barplot( Materials, space=0, axes=F, col=c("gray90","gray60"), names.arg="Materials", cex.names=1.5, ylim=c(0,300) )
+barplot( Services, space=0, axes=F, col=c("gray90","gray60"), names.arg="Services", cex.names=1.5, ylim=c(0,300) )
+barplot( Technology, space=0, axes=F, col=c("gray90","gray60"), names.arg="Technology", cex.names=1.5, ylim=c(0,300) )
+mtext( "Overall Giving Activity Through Years 1 & 2 by Sector", outer = TRUE, side=3, cex=1)
+
+#Energy
+par( mfrow=c(2,4), mar=c(3,1,0,1), oma=c(0,0,3,0) )
+
+barplot( Commerce, space=0, axes=F, col=c("gray90","gray60"), names.arg="Commerce", cex.names=1.5, ylim=c(0,300) )
+legend("topleft", c("2014","2015"), cex=1.5, bty="n", fill=wes_palette("Cavalcanti", 2) )
+barplot( Consumer.Goods, space=0, axes=F, col=c("gray90","gray60"), names.arg="Consumer Goods", cex.names=1.5, ylim=c(0,300)  )
+barplot( Energy, space=0, axes=F, col=wes_palette("Cavalcanti", 2), names.arg="Energy", cex.names=1.5, ylim=c(0,300) )
+barplot( Financial, space=0, axes=F, col=c("gray90","gray60"), names.arg="Financial", cex.names=1.5, ylim=c(0,300) )
+barplot( Healthcare, space=0, axes=F, col=c("gray90","gray60"), names.arg="Healthcare", cex.names=1.5, ylim=c(0,300) )
+barplot( Materials, space=0, axes=F, col=c("gray90","gray60"), names.arg="Materials", cex.names=1.5, ylim=c(0,300) )
+barplot( Services, space=0, axes=F, col=c("gray90","gray60"), names.arg="Services", cex.names=1.5, ylim=c(0,300) )
+barplot( Technology, space=0, axes=F, col=c("gray90","gray60"), names.arg="Technology", cex.names=1.5, ylim=c(0,300) )
+mtext( "Overall Giving Activity Through Years 1 & 2 by Sector", outer = TRUE, pos=3, cex=1)
+
+# Financial
+par( mfrow=c(2,4), mar=c(3,1,0,1), oma=c(0,0,3,0) )
+
+barplot( Commerce, space=0, axes=F, col=c("gray90","gray60"), names.arg="Commerce", cex.names=1.5, ylim=c(0,300) )
+legend("topleft", c("2014","2015"), cex=1.5, bty="n", fill=wes_palette("Cavalcanti", 2) )
+barplot( Consumer.Goods, space=0, axes=F, col=c("gray90","gray60"), names.arg="Consumer Goods", cex.names=1.5, ylim=c(0,300)  )
+barplot( Energy, space=0, axes=F, col=c("gray90","gray60"), names.arg="Energy", cex.names=1.5, ylim=c(0,300) )
+barplot( Financial, space=0, axes=F, col=wes_palette("Cavalcanti", 2), names.arg="Financial", cex.names=1.5, ylim=c(0,300) )
+barplot( Healthcare, space=0, axes=F, col=c("gray90","gray60"), names.arg="Healthcare", cex.names=1.5, ylim=c(0,300) )
+barplot( Materials, space=0, axes=F, col=c("gray90","gray60"), names.arg="Materials", cex.names=1.5, ylim=c(0,300) )
+barplot( Services, space=0, axes=F, col=c("gray90","gray60"), names.arg="Services", cex.names=1.5, ylim=c(0,300) )
+barplot( Technology, space=0, axes=F, col=c("gray90","gray60"), names.arg="Technology", cex.names=1.5, ylim=c(0,300) )
+mtext( "Overall Giving Activity Through Years 1 & 2 by Sector", outer = TRUE, side=3, cex=1)
+
+# Healthcare
+par( mfrow=c(2,4), mar=c(3,1,0,1), oma=c(0,0,3,0) )
+
+barplot( Commerce, space=0, axes=F, col=c("gray90","gray60"), names.arg="Commerce", cex.names=1.5, ylim=c(0,300) )
+legend("topleft", c("2014","2015"), cex=1.5, bty="n", fill=wes_palette("Cavalcanti", 2) )
+barplot( Consumer.Goods, space=0, axes=F, col=c("gray90","gray60"), names.arg="Consumer Goods", cex.names=1.5, ylim=c(0,300)  )
+barplot( Energy, space=0, axes=F, col=c("gray90","gray60"), names.arg="Energy", cex.names=1.5, ylim=c(0,300) )
+barplot( Financial, space=0, axes=F, col=c("gray90","gray60"), names.arg="Financial", cex.names=1.5, ylim=c(0,300) )
+barplot( Healthcare, space=0, axes=F, col=wes_palette("Cavalcanti", 2), names.arg="Healthcare", cex.names=1.5, ylim=c(0,300) )
+barplot( Materials, space=0, axes=F, col=c("gray90","gray60"), names.arg="Materials", cex.names=1.5, ylim=c(0,300) )
+barplot( Services, space=0, axes=F, col=c("gray90","gray60"), names.arg="Services", cex.names=1.5, ylim=c(0,300) )
+barplot( Technology, space=0, axes=F, col=c("gray90","gray60"), names.arg="Technology", cex.names=1.5, ylim=c(0,300) )
+mtext( "Overall Giving Activity Through Years 1 & 2 by Sector", outer = TRUE, side=3, cex=1)
+
+# Materials
+par( mfrow=c(2,4), mar=c(3,1,0,1), oma=c(0,0,3,0) )
+
+barplot( Commerce, space=0, axes=F, col=c("gray90","gray60"), names.arg="Commerce", cex.names=1.5, ylim=c(0,300) )
+legend("topleft", c("2014","2015"), cex=1.5, bty="n", fill=wes_palette("Cavalcanti", 2) )
+barplot( Consumer.Goods, space=0, axes=F, col=c("gray90","gray60"), names.arg="Consumer Goods", cex.names=1.5, ylim=c(0,300)  )
+barplot( Energy, space=0, axes=F, col=c("gray90","gray60"), names.arg="Energy", cex.names=1.5, ylim=c(0,300) )
+barplot( Financial, space=0, axes=F, col=c("gray90","gray60"), names.arg="Financial", cex.names=1.5, ylim=c(0,300) )
+barplot( Healthcare, space=0, axes=F, col=c("gray90","gray60"), names.arg="Healthcare", cex.names=1.5, ylim=c(0,300) )
+barplot( Materials, space=0, axes=F, col=wes_palette("Cavalcanti", 2), names.arg="Materials", cex.names=1.5, ylim=c(0,300) )
+barplot( Services, space=0, axes=F, col=c("gray90","gray60"), names.arg="Services", cex.names=1.5, ylim=c(0,300) )
+barplot( Technology, space=0, axes=F, col=c("gray90","gray60"), names.arg="Technology", cex.names=1.5, ylim=c(0,300) )
+mtext( "Overall Giving Activity Through Years 1 & 2 by Sector", outer = TRUE, side=3, cex=1)
+
+# Services
+par( mfrow=c(2,4), mar=c(3,1,0,1), oma=c(0,0,3,0) )
+
+barplot( Commerce, space=0, axes=F, col=c("gray90","gray60"), names.arg="Commerce", cex.names=1.5, ylim=c(0,300) )
+legend("topleft", c("2014","2015"), cex=1.5, bty="n", fill=wes_palette("Cavalcanti", 2) )
+barplot( Consumer.Goods, space=0, axes=F, col=c("gray90","gray60"), names.arg="Consumer Goods", cex.names=1.5, ylim=c(0,300)  )
+barplot( Energy, space=0, axes=F, col=c("gray90","gray60"), names.arg="Energy", cex.names=1.5, ylim=c(0,300) )
+barplot( Financial, space=0, axes=F, col=c("gray90","gray60"), names.arg="Financial", cex.names=1.5, ylim=c(0,300) )
+barplot( Healthcare, space=0, axes=F, col=c("gray90","gray60"), names.arg="Healthcare", cex.names=1.5, ylim=c(0,300) )
+barplot( Materials, space=0, axes=F, col=c("gray90","gray60"), names.arg="Materials", cex.names=1.5, ylim=c(0,300) )
+barplot( Services, space=0, axes=F, col=wes_palette("Cavalcanti", 2), names.arg="Services", cex.names=1.5, ylim=c(0,300) )
+barplot( Technology, space=0, axes=F, col=c("gray90","gray60"), names.arg="Technology", cex.names=1.5, ylim=c(0,300) )
+mtext( "Overall Giving Activity Through Years 1 & 2 by Sector", outer = TRUE, side=3, cex=1)
+
+# Tech
+par( mfrow=c(2,4), mar=c(3,1,0,1), oma=c(0,0,3,0) )
+
+barplot( Commerce, space=0, axes=F, col=c("gray90","gray60"), names.arg="Commerce", cex.names=1.5, ylim=c(0,300) )
+legend("topleft", c("2014","2015"), cex=1.5, bty="n", fill=wes_palette("Cavalcanti", 2) )
+barplot( Consumer.Goods, space=0, axes=F, col=c("gray90","gray60"), names.arg="Consumer Goods", cex.names=1.5, ylim=c(0,300)  )
+barplot( Energy, space=0, axes=F, col=c("gray90","gray60"), names.arg="Energy", cex.names=1.5, ylim=c(0,300) )
+barplot( Financial, space=0, axes=F, col=c("gray90","gray60"), names.arg="Financial", cex.names=1.5, ylim=c(0,300) )
+barplot( Healthcare, space=0, axes=F, col=c("gray90","gray60"), names.arg="Healthcare", cex.names=1.5, ylim=c(0,300) )
+barplot( Materials, space=0, axes=F, col=c("gray90","gray60"), names.arg="Materials", cex.names=1.5, ylim=c(0,300) )
+barplot( Services, space=0, axes=F, col=c("gray90","gray60"), names.arg="Services", cex.names=1.5, ylim=c(0,300) )
+barplot( Technology, space=0, axes=F, pos=4), col=wes_palette("Cavalcanti", 2), names.arg="Technology", cex.names=1.5, ylim=c(0,300) )
+mtext( "Overall Giving Activity Through Years 1 & 2 by Sector", outer = TRUE, side=3, cex=1)
+
+# Why won't this work??
+# axis(4, at=c(0,50,100,150,200,250), labels=c("0","50","100","150","200","250"), pos=4),
+
+
+
