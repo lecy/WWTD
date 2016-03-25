@@ -1,0 +1,96 @@
+---
+title: "Tufte Lab"
+author: "Rory Tikalsky"
+date: "March 25, 2016"
+output: html_document
+---
+
+```{r}
+setwd("C:/Users/Rory/Google Drive/Class/Data-Driven Management II/tofte assignment")
+
+dat <- read.csv("dc tax burdens.csv")
+new <- paste(dat$County, ", ", dat$State, sep="") #combine county/state for easy naming vector
+
+
+
+taxes <- data.frame(dat$Income.Tax[9:16], dat$Property.Tax[9:16], dat$Sales.Tax[9:16], dat$Auto.Tax[9:16])
+taxes <- as.matrix(taxes)
+taxes <- t(taxes) #transpose the matrix
+test <- as.data.frame(taxes)
+
+
+#fix margins to make labels fit
+mar.default <- c(5,4,4,2) + 0.1
+par(mar = mar.default + c(0, 7, 0, 3)) 
+
+bplt <- barplot(taxes, main="Washington Metropolitan Area Tax Burden \n Household Income: $50,000", cex.main=1.8,
+        col=c("steelblue2", "tan3", "springgreen3", "tomato2"),
+        horiz=TRUE,
+        xaxt="n",
+        names.arg=new[9:16],
+        ylim=c(-.5,10.4),
+        las=2,
+        border=NA)
+
+#legend(x=4678, y=9.4, legend= c("Income", "Property", "Sales", "Auto"), fill=c("steelblue2", "tan3", "springgreen3", "tomato2"), bty="n", cex=.75)
+
+
+#total tax labels
+text(x= sum(test$V1)+300, y= bplt[1], labels=paste( "$", sum(test$V1), sep=""), xpd=TRUE)
+text(x= sum(test$V2)+300, y= bplt[2], labels=paste( "$", sum(test$V2), sep=""), xpd=TRUE)
+text(x= sum(test$V3)+300, y= bplt[3], labels=paste( "$", sum(test$V3), sep=""), xpd=TRUE)
+text(x= sum(test$V4)+300, y= bplt[4], labels=paste( "$", sum(test$V4), sep=""), xpd=TRUE)
+text(x= sum(test$V5)+300, y= bplt[5], labels=paste( "$", sum(test$V5), sep=""), xpd=TRUE)
+text(x= sum(test$V6)+300, y= bplt[6], labels=paste( "$", sum(test$V6), sep=""), xpd=TRUE)
+text(x= sum(test$V7)+300, y= bplt[7], labels=paste( "$", sum(test$V7), sep=""), xpd=TRUE)
+text(x= sum(test$V8)+300, y= bplt[8], labels=paste( "$", sum(test$V8), sep=""), xpd=TRUE)
+
+
+##auto tax labels
+text(x=(sum(test$V1[1:3])+(test$V1[4]/2)), y=bplt[1], labels=paste( (round(test$V1[4]/sum(test$V1),2)*100), "%", sep=""), xpd=TRUE, cex=.8)
+text(x=(sum(test$V2[1:3])+(test$V2[4]/2)), y=bplt[2], labels=paste( (round(test$V1[4]/sum(test$V2),2)*100), "%", sep=""), xpd=TRUE, cex=.8)
+text(x=(sum(test$V3[1:3])+(test$V3[4]/2)), y=bplt[3], labels=paste( (round(test$V1[4]/sum(test$V3),2)*100), "%", sep=""), xpd=TRUE, cex=.8)
+text(x=(sum(test$V4[1:3])+(test$V4[4]/2)), y=bplt[4], labels=paste( (round(test$V1[4]/sum(test$V4),2)*100), "%", sep=""), xpd=TRUE, cex=.8)
+text(x=(sum(test$V5[1:3])+(test$V5[4]/2)), y=bplt[5], labels=paste( (round(test$V1[4]/sum(test$V5),2)*100), "%", sep=""), xpd=TRUE, cex=.8)
+text(x=(sum(test$V6[1:3])+(test$V6[4]/2)), y=bplt[6], labels=paste( (round(test$V1[4]/sum(test$V6),2)*100), "%", sep=""), xpd=TRUE, cex=.8)
+text(x=(sum(test$V7[1:3])+(test$V7[4]/2)), y=bplt[7], labels=paste( (round(test$V1[4]/sum(test$V7),2)*100), "%", sep=""), xpd=TRUE, cex=.8)
+text(x=(sum(test$V8[1:3])+(test$V8[4]/2)), y=bplt[8], labels=paste( (round(test$V1[4]/sum(test$V8),2)*100), "%", sep=""), xpd=TRUE, cex=.8)
+
+#sales tax labels
+text(x=(sum(test$V1[1:2])+(test$V1[3]/2)), y=bplt[1], labels=paste( (round(test$V1[3]/sum(test$V1),2)*100), "%", sep=""), xpd=TRUE, cex=.8)
+text(x=(sum(test$V2[1:2])+(test$V1[3]/2)), y=bplt[2], labels=paste( (round(test$V2[3]/sum(test$V2),2)*100), "%", sep=""), xpd=TRUE, cex=.8)
+text(x=(sum(test$V3[1:2])+(test$V1[3]/2)), y=bplt[3], labels=paste( (round(test$V3[3]/sum(test$V3),2)*100), "%", sep=""), xpd=TRUE, cex=.8)
+text(x=(sum(test$V4[1:2])+(test$V1[3]/2)), y=bplt[4], labels=paste( (round(test$V4[3]/sum(test$V4),2)*100), "%", sep=""), xpd=TRUE, cex=.8)
+text(x=(sum(test$V5[1:2])+(test$V1[3]/2)), y=bplt[5], labels=paste( (round(test$V5[3]/sum(test$V5),2)*100), "%", sep=""), xpd=TRUE, cex=.8)
+text(x=(sum(test$V6[1:2])+(test$V1[3]/2)), y=bplt[6], labels=paste( (round(test$V6[3]/sum(test$V6),2)*100), "%", sep=""), xpd=TRUE, cex=.8)
+text(x=(sum(test$V7[1:2])+(test$V1[3]/2)), y=bplt[7], labels=paste( (round(test$V7[3]/sum(test$V7),2)*100), "%", sep=""), xpd=TRUE, cex=.8)
+text(x=(sum(test$V8[1:2])+(test$V1[3]/2)), y=bplt[8], labels=paste( (round(test$V8[3]/sum(test$V8),2)*100), "%", sep=""), xpd=TRUE, cex=.8)
+
+#property tax labels
+text(x=(sum(test$V1[1])+(test$V1[2]/2)), y=bplt[1], labels=paste( (round(test$V1[2]/sum(test$V1),2)*100), "%", sep=""), xpd=TRUE, cex=.8)
+text(x=(sum(test$V2[1])+(test$V2[2]/2)), y=bplt[2], labels=paste( (round(test$V2[2]/sum(test$V2),2)*100), "%", sep=""), xpd=TRUE, cex=.8)
+text(x=(sum(test$V3[1])+(test$V3[2]/2)), y=bplt[3], labels=paste( (round(test$V3[2]/sum(test$V3),2)*100), "%", sep=""), xpd=TRUE, cex=.8)
+text(x=(sum(test$V4[1])+(test$V4[2]/2)), y=bplt[4], labels=paste( (round(test$V4[2]/sum(test$V4),2)*100), "%", sep=""), xpd=TRUE, cex=.8)
+text(x=(sum(test$V5[1])+(test$V5[2]/2)), y=bplt[5], labels=paste( (round(test$V5[2]/sum(test$V5),2)*100), "%", sep=""), xpd=TRUE, cex=.8)
+text(x=(sum(test$V6[1])+(test$V6[2]/2)), y=bplt[6], labels=paste( (round(test$V6[2]/sum(test$V6),2)*100), "%", sep=""), xpd=TRUE, cex=.8)
+text(x=(sum(test$V7[1])+(test$V7[2]/2)), y=bplt[7], labels=paste( (round(test$V7[2]/sum(test$V7),2)*100), "%", sep=""), xpd=TRUE, cex=.8)
+text(x=(sum(test$V8[1])+(test$V8[2]/2)), y=bplt[8], labels=paste( (round(test$V8[2]/sum(test$V8),2)*100), "%", sep=""), xpd=TRUE, cex=.8)
+
+#income tax labels
+text(x=(test$V1[1]/2), y=bplt[1], labels=paste( (round(test$V1[1]/sum(test$V1),2)*100), "%", sep=""), xpd=TRUE, cex=.8)
+text(x=(test$V2[1]/2), y=bplt[2], labels=paste( (round(test$V2[1]/sum(test$V2),2)*100), "%", sep=""), xpd=TRUE, cex=.8)
+text(x=(test$V3[1]/2), y=bplt[3], labels=paste( (round(test$V3[1]/sum(test$V3),2)*100), "%", sep=""), xpd=TRUE, cex=.8)
+text(x=(test$V4[1]/2), y=bplt[4], labels=paste( (round(test$V4[1]/sum(test$V4),2)*100), "%", sep=""), xpd=TRUE, cex=.8)
+text(x=(test$V5[1]/2), y=bplt[5], labels=paste( (round(test$V5[1]/sum(test$V5),2)*100), "%", sep=""), xpd=TRUE, cex=.8)
+text(x=(test$V6[1]/2), y=bplt[6], labels=paste( (round(test$V6[1]/sum(test$V6),2)*100), "%", sep=""), xpd=TRUE, cex=.8)
+text(x=(test$V7[1]/2), y=bplt[7], labels=paste( (round(test$V7[1]/sum(test$V7),2)*100), "%", sep=""), xpd=TRUE, cex=.8)
+text(x=(test$V8[1]/2), y=bplt[8], labels=paste( (round(test$V8[1]/sum(test$V8),2)*100), "%", sep=""), xpd=TRUE, cex=.8)
+
+#color labels
+
+text(x=400, y=-.5, labels="Income", col="steelblue3", cex=1.4)
+text(x=1400, y=-.5, labels="Property", col="tan3", cex=1.4)
+text(x=2400, y=-.5, labels="Sales", col="springgreen3", cex=1.4)
+text(x=3400, y=-.5, labels="Auto", col="tomato2", cex=1.4)
+text(x=4400, y=-.5, labels="Total", cex=1.4)
+```
