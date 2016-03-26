@@ -1,0 +1,265 @@
+### This graph shows rainfall statistics for Honduras.
+
+![alt text](http://i.imgur.com/nPiINRy.png)
+
+### But what story is being conveyed in this awful graph?
+
+
+```{r}
+
+dat <- read.csv("https://raw.githubusercontent.com/lecy/WWTD/master/Data/rainfall%20in%20honduras.csv")
+
+
+plot (dat$month_id, dat$precip,
+      col = "#2626261A", pch = 16, bty = "l",
+      yaxt="n", xaxt="n", ylab="", xlab = "", ylim = c ( -10, 500), main = "Precipitation by Month")
+
+abline ( v = seq(from = 6, to = 66, by= 12), col="gray80", lty=2, lwd=1.5)
+
+lines (dat$month_id, dat$precip, col="gray60", lwd=2.5)
+points (dat$month_id, dat$precip, col="gray40", pch=19, cex=1)
+
+ticks <- c( 0,6, 18, 30, 42, 54, 66, 70)
+yrtick <- c ("", "2010", "2011", "2012", "2013", "2014", "2015", "")
+yticks <- c ( 0, 150, 300, 450)
+
+axis(side = 1, at = ticks, labels = yrtick, cex=1.5, lwd=2, col="gray", cex.axis = 0.8, tick = F)
+axis (side =2, cex.axis = 0.8, at = yticks)
+
+```
+
+### Perhaps it is more useful to see a smoothed trend line
+
+```{r}
+
+
+plot (dat$month_id, dat$precip,
+      col = "#2626261A", pch = 16, bty = "l",
+      yaxt="n", xaxt="n", ylab="", xlab = "", ylim = c ( -10, 500), main = "Precipitation by Month")
+
+abline ( v = seq(from = 6, to = 66, by= 12), col="gray90", lty=2, lwd=1.5)
+
+lines (lowess (dat$month_id, dat$precip, f = 0.23), lwd = 3.5, col = "gray30")
+
+points (dat$month_id, dat$precip, col="gray60", pch=19, cex=1)
+
+ticks <- c( 0,6, 18, 30, 42, 54, 66, 70)
+yrtick <- c ("", "2010", "2011", "2012", "2013", "2014", "2015", "")
+yticks <- c ( 0, 150, 300, 450)
+
+axis(side = 1, at = ticks, labels = yrtick, cex=1.5, lwd=2, col="gray", cex.axis = 0.8, tick = F)
+axis (side =2, cex.axis = 0.8, at = yticks)
+
+```
+
+### A better story might be to see only the monthly averages for all 6 years.
+
+```{r}
+
+
+months <- as.numeric (1:12)
+dat <- cbind (dat, months)
+
+avg.monthly <- tapply (dat$precip, dat$months, mean)
+tdat <- cbind (1:12, avg.monthly)
+tdat<- as.data.frame(tdat)
+
+plot (tdat$V1, tdat$avg.monthly, col = "white", pch = 16, bty = "l",
+      yaxt="n", xaxt="n", ylab="", xlab = "", xlim = c( 0, 13), ylim = c ( -10, 400), main = "Average Precipitation by Month")
+
+abline ( v = seq(from = 1, to = 12, by= 1), col="gray90", lty=2, lwd=1.5)
+lines (tdat$V1, tdat$avg.monthly, lwd = 3.5, col = "gray50" )
+
+points (tdat$V1, tdat$avg.monthly, pch = 19, col = "gray30", cex = 1)
+
+ticks <- as.numeric (1:12)
+yticks <- c( 50, 150, 250, 350)
+m.labels<- unique (dat$month)
+
+axis(side = 1, at = months, labels = m.labels, cex=1.5, lwd=2, col="gray", cex.axis = 0.8, tick = F, cex.axis = .8)
+axis (side =2, cex.axis = 0.8, at = yticks)
+
+### Add some Text
+
+
+
+```
+
+
+### Smooth it and add some text to tell a story
+
+```{r}
+
+plot (tdat$V1, tdat$avg.monthly, col = "white", pch = 16, bty = "l",
+      yaxt="n", xaxt="n", ylab="", xlab = "", xlim = c( 0, 13), ylim = c ( -10, 400))
+
+title(main="Average Precipitation by Month \n (in mm of H2O)", col.main="steelblue4", cex.main = 1  )
+
+abline ( v = seq(from = 1, to = 12, by= 1), col="gray90", lty=2, lwd=1.5)
+
+lines (lowess (tdat$V1, tdat$avg.monthly, f = 0.5), lwd = 3.5, col = "gray30")
+points (tdat$V1, tdat$avg.monthly, pch = 19, col = "gray60", cex = 1)
+
+segments (x0=5, x1=10, y0=100, y1=100, col="gray40", lwd=3)
+segments (x0=5, x1=5, y0=90, y1=110, col="gray40", lwd=3)
+segments (x0=10, x1=10, y0=90, y1=110, col="gray40", lwd=3)
+
+ticks <- as.numeric (1:12)
+yticks <- c( 50, 150, 250, 350)
+m.labels<- unique (dat$month)
+
+axis(side = 1, at = months, labels = m.labels, cex=1.5, lwd=2, col="gray", cex.axis = 0.8, tick = F, cex.axis = .8)
+axis (side =2, cex.axis = 0.8, at = yticks)
+
+text (5.3, 70, pos = 4, "Rainy Season begins in April \n       and peaks in October.", font=2, cex = .7, col="gray40")
+```
+
+#### Highlights of Interest. Scale up.
+
+```{r, fig.width=14, fig.height=10}
+
+plot (tdat$V1, tdat$avg.monthly, col = "white", pch = 16, bty = "l",
+      yaxt="n", xaxt="n", ylab="", xlab = "", xlim = c( 0, 13), ylim = c ( -10, 400))
+
+title(main="Average Precipitation by Month \n (in mm of H2O)", col.main="steelblue4", cex.main = 2  )
+
+abline ( v = seq(from = 1, to = 12, by= 1), col="gray90", lty=2, lwd=1.5)
+
+lines (lowess (tdat$V1, tdat$avg.monthly, f = 0.5), lwd = 6.5, col = "gray30")
+points (tdat$V1, tdat$avg.monthly, pch = 19, col = "gray60", cex = 2)
+
+segments (x0=4, x1=10, y0=95, y1=95, col="gray40", lwd=5)
+segments (x0=4, x1=4, y0=85, y1=105, col="gray40", lwd=5)
+segments (x0=10, x1=10, y0=85, y1=105, col="gray40", lwd=5)
+
+ticks <- as.numeric (1:12)
+yticks <- c( 50, 150, 250, 350)
+m.labels<- unique (dat$month)
+
+axis(side = 1, at = months, labels = m.labels, cex=1.5, lwd=2, col="gray", cex.axis = 1.5, tick = F)
+axis (side =2, cex.axis = 1.5, at = yticks)
+
+text (5.3, 70, pos = 4, "Rainy Season begins in April \n       and peaks in October.", font=2, cex = 1.3, col="gray40")
+
+points (10, 281.8333, pch=19, cex=3, lwd=2, col = "steelblue4")
+text ( 10, 290.8333, "October Peak \n Rainfall: 281 mm", col="steelblue", cex=1.6, font = 2, pos=3)
+
+
+points (3, 67.6833, pch=19, cex=3, lwd=2, col = "steelblue4")
+text ( 3, 50.6833, "March Minimum \n Rainfall: 68 mm", col="steelblue", cex=1.6, font = 2, pos=1)
+
+points (0.1, 370, pch=19, cex=3.5, lwd=2, col = "steelblue4")
+text (0.1, 370, "   1 mm of H2O = 1 liter of rainfall per square meter.", cex = 1.5, font = 2, pos = 4)
+
+```
+
+
+### Compare Yearly Trends
+
+```{r, fig.width=14, fig.height=10}
+
+monthnum <- as.numeric (1:12)
+
+twenty10 <- dat [ dat$year_id == "2010",]
+twenty10 <- cbind (twenty10, monthnum)
+
+twenty11 <- dat [ dat$year_id == "2011",]
+twenty11 <- cbind (twenty11, monthnum)
+
+twenty12 <- dat [ dat$year_id == "2012",]
+twenty12 <- cbind (twenty12, monthnum)
+
+twenty13 <- dat [ dat$year_id == "2013",]
+twenty13 <- cbind (twenty13, monthnum)
+
+twenty14 <- dat [ dat$year_id == "2014",]
+twenty14 <- cbind (twenty14, monthnum)
+
+twenty15 <- dat [ dat$year_id == "2015",]
+twenty15 <- cbind (twenty15, monthnum)
+
+
+par(mfrow=c(3,2))
+
+
+plot (twenty10$monthnum, twenty10$precip , col = "white", pch = 16, bty = "n",
+      yaxt="n", xaxt="n", ylab="", xlab = "", main = "2010 Precipitation", cex.main = 2.3, ylim = c(0, 450 ) )
+
+
+
+lines (lowess (twenty11$monthnum, twenty11$precip, f = 0.5), lwd = 3.5, col = "gray80")
+lines (lowess (twenty12$monthnum, twenty12$precip, f = 0.5), lwd = 3.5, col = "gray80")
+lines (lowess (twenty13$monthnum, twenty13$precip, f = 0.5), lwd = 3.5, col = "gray80")
+lines (lowess (twenty14$monthnum, twenty14$precip, f = 0.5), lwd = 3.5, col = "gray80")
+lines (lowess (twenty15$monthnum, twenty15$precip, f = 0.5), lwd = 3.5, col = "gray80")
+lines (lowess (twenty10$monthnum, twenty10$precip, f = 0.5), lwd = 3.5, col = "gray30")
+
+
+plot (twenty11$monthnum, twenty11$precip , col = "white", pch = 16, bty = "n",
+      yaxt="n", xaxt="n", ylab="", xlab = "", main = "2011 Precipitation", cex.main = 2.3, ylim = c(0, 450 ), xlim = c(0,12) )
+
+
+lines (lowess (twenty10$monthnum, twenty10$precip, f = 0.5), lwd = 3.5, col = "gray80")
+lines (lowess (twenty12$monthnum, twenty12$precip, f = 0.5), lwd = 3.5, col = "gray80")
+lines (lowess (twenty13$monthnum, twenty13$precip, f = 0.5), lwd = 3.5, col = "gray80")
+lines (lowess (twenty14$monthnum, twenty14$precip, f = 0.5), lwd = 3.5, col = "gray80")
+lines (lowess (twenty15$monthnum, twenty15$precip, f = 0.5), lwd = 3.5, col = "gray80")
+lines (lowess (twenty11$monthnum, twenty11$precip, f = 0.5), lwd = 3.5, col = "gray30")
+
+
+plot (twenty12$monthnum, twenty12$precip , col = "white", pch = 16, bty = "n",
+      yaxt="n", xaxt="n", ylab="", xlab = "", main = "2012 Precipitation", cex.main = 2.3, ylim = c(0, 450 ) )
+
+lines (lowess (twenty10$monthnum, twenty10$precip, f = 0.5), lwd = 3.5, col = "gray80")
+lines (lowess (twenty11$monthnum, twenty11$precip, f = 0.5), lwd = 3.5, col = "gray80")
+lines (lowess (twenty13$monthnum, twenty13$precip, f = 0.5), lwd = 3.5, col = "gray80")
+lines (lowess (twenty14$monthnum, twenty14$precip, f = 0.5), lwd = 3.5, col = "gray80")
+lines (lowess (twenty15$monthnum, twenty15$precip, f = 0.5), lwd = 3.5, col = "gray80")
+lines (lowess (twenty12$monthnum, twenty12$precip, f = 0.5), lwd = 3.5, col = "gray30")
+
+
+plot (twenty13$monthnum, twenty13$precip , col = "white", pch = 16, bty = "n",
+      yaxt="n", xaxt="n", ylab="", xlab = "", main = "2013 Precipitation", cex.main = 2.3, ylim = c(0, 450 ) )
+
+
+lines (lowess (twenty10$monthnum, twenty10$precip, f = 0.5), lwd = 3.5, col = "gray80")
+lines (lowess (twenty11$monthnum, twenty11$precip, f = 0.5), lwd = 3.5, col = "gray80")
+lines (lowess (twenty12$monthnum, twenty12$precip, f = 0.5), lwd = 3.5, col = "gray80")
+lines (lowess (twenty14$monthnum, twenty14$precip, f = 0.5), lwd = 3.5, col = "gray80")
+lines (lowess (twenty15$monthnum, twenty15$precip, f = 0.5), lwd = 3.5, col = "gray80")
+lines (lowess (twenty13$monthnum, twenty13$precip, f = 0.5), lwd = 3.5, col = "gray30")
+
+
+plot (twenty14$monthnum, twenty14$precip , col = "white", pch = 16, bty = "n",
+      yaxt="n", xaxt="n", ylab="", xlab = "", main = "2014 Precipitation", cex.main = 2.3, ylim = c(0, 450 ) )
+
+
+lines (lowess (twenty10$monthnum, twenty10$precip, f = 0.5), lwd = 3.5, col = "gray80")
+lines (lowess (twenty11$monthnum, twenty11$precip, f = 0.5), lwd = 3.5, col = "gray80")
+lines (lowess (twenty12$monthnum, twenty12$precip, f = 0.5), lwd = 3.5, col = "gray80")
+lines (lowess (twenty13$monthnum, twenty13$precip, f = 0.5), lwd = 3.5, col = "gray80")
+lines (lowess (twenty15$monthnum, twenty15$precip, f = 0.5), lwd = 3.5, col = "gray80")
+lines (lowess (twenty14$monthnum, twenty14$precip, f = 0.5), lwd = 3.5, col = "gray30")
+
+
+plot (twenty15$monthnum, twenty15$precip , col = "white", pch = 16, bty = "n",
+      yaxt="n", xaxt="n", ylab="", xlab = "", main = "2015 Precipitation", cex.main = 2.3, ylim = c(0, 450 ) )
+
+
+lines (lowess (twenty10$monthnum, twenty10$precip, f = 0.5), lwd = 3.5, col = "gray80")
+lines (lowess (twenty11$monthnum, twenty11$precip, f = 0.5), lwd = 3.5, col = "gray80")
+lines (lowess (twenty12$monthnum, twenty12$precip, f = 0.5), lwd = 3.5, col = "gray80")
+lines (lowess (twenty13$monthnum, twenty13$precip, f = 0.5), lwd = 3.5, col = "gray80")
+lines (lowess (twenty14$monthnum, twenty14$precip, f = 0.5), lwd = 3.5, col = "gray80")
+lines (lowess (twenty15$monthnum, twenty15$precip, f = 0.5), lwd = 3.5, col = "gray30")
+
+
+
+
+
+
+
+```
+
+
+
